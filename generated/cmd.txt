@@ -1,0 +1,6 @@
+# cmd.txt - commands for ssh_session_pexpect.py
+df -hT
+uptime
+uname -a
+whoami
+ls -la /tmp

@@ -1,0 +1,45 @@
+You are operating in a repository that uses Roo Code’s memory-bank
+(memory-bank/) as the authoritative long-term knowledge source.
+
+Initialization steps (do these before responding):
+1. Read all files under memory-bank/.
+2. Identify architecture rules, compliance constraints, security requirements,
+   approved patterns, and forbidden practices.
+3. Treat memory-bank guidance as higher priority than inferred code patterns.
+
+During this task:
+- Generate code or explanations that strictly comply with memory-bank rules.
+- Prefer approved patterns over general best practices.
+- Refuse and explain any request that would violate memory-bank guidance.
+- When multiple valid options exist, choose the safest and most compliant one.
+
+---------------------------------------------------------------------
+Memory-bank update behavior:
+- If you discover a new, stable, reusable pattern, explicitly propose an update
+  to the appropriate memory-bank file (architecture.md, patterns.md, etc.).
+- If a compliance rule or constraint is clarified by this change, propose a
+  documentation update to memory-bank.
+- Do NOT silently change memory-bank content.
+- Present suggested memory-bank updates separately and clearly labeled.
+
+Response format:
+1. Brief summary of how memory-bank guidance was applied.
+2. The generated code or solution.
+3. (If applicable) Suggested memory-bank updates with rationale.
+
+If any memory-bank rule is ambiguous or conflicting, stop and ask for
+clarification before proceeding.
+
+
+--------------------------------------------------------------------------------------
+
+Before responding, confirm that memory-bank has been consulted.
+If it has not been consulted, do not answer.
+
+All outputs must:
+- Cite which memory-bank files influenced the solution
+- Preserve compliance, security, and audit guarantees
+- Avoid introducing undocumented patterns
+
+If no compliant solution exists, respond with:
+"NO COMPLIANT IMPLEMENTATION AVAILABLE" and explain why.

@@ -1,0 +1,70 @@
+digraph Octo_Architecture {
+    label="Octo Project High-Level Architecture";
+    fontname="Helvetica";
+    fontsize=16;
+    rankdir=TB;
+
+    node [shape=box, style=filled, fillcolor=lightblue, fontname="Helvetica"];
+
+    // Clusters
+    subgraph cluster_core {
+        label="Core (bin/)";
+        color=blue;
+        style=dashed;
+
+        Step_Engines [label="Step Engines\n(octo_step_engine_create.py,\nocto_step_engine_parameters.py)"];
+        Step_Instances [label="Step Instances\n(octo_step_instance*.py)"];
+        Utils [label="Utilities\n(octo_banner.py, octo_graph_steps.py, etc.)"];
+    }
+
+    subgraph cluster_modules {
+        label="Modules (bin/modules/)";
+        color=green;
+        style=dashed;
+
+        Base_Classes [label="Base Classes\n(stepnode_baseclass.py,\nocto_lock_json.py)"];
+        
+        subgraph cluster_step_libs {
+            label="Step Engine Libraries";
+            color=lightgreen;
+            style=solid;
+            
+            Lib001 [label="Library 001\n(General Steps)"];
+            Lib002 [label="Library 002\n(Shorthand & Steps)"];
+            Lib003_SWIMMS [label="Library 003\n(SWIMMS SLDP)"];
+            Lib004_SWIMMS [label="Library 004\n(SWIMMS SLDP Enhanced)"];
+            Lib005_Blade [label="Library 005\n(Blade & BMC Automation)"];
+        }
+    }
+
+    subgraph cluster_instances {
+        label="Instances (bin/instances/)";
+        color=red;
+        style=dashed;
+
+        Common_Configs [label="Common Configs\n(.octo_step_engine_parameters.json,\nGESetup.json)"];
+        
+        subgraph cluster_projects {
+            label="Project Instances";
+            color=pink;
+            style=solid;
+            
+            Demo [label="Demo\n(Testing & Scripts)"];
+            Goldeneye [label="Goldeneye\n(Config Arrows/Nodes/Params)"];
+            Swim [label="Swim\n(Challenge Keys & Tmux)"];
+            Jira [label="Jira\n(Integration & Attachments)"];
+        }
+    }
+
+    // Logical Flow and Dependencies
+    Instances -> Core [label="Configures\n(Parameters & Setup)", fontsize=10];
+    Core -> Modules [label="Uses\n(Step Libraries)", fontsize=10];
+    
+    // Data Flow
+    Common_Configs -> Step_Engines [label="Input\n(JSON Configs)", fontsize=10, color=blue];
+    Step_Engines -> Step_Engine_Libraries [label="Executes\n(Step Nodes)", fontsize=10, color=green];
+    Step_Engine_Libraries -> Instances [label="Output\n(Logs & Results)", fontsize=10, color=red];
+    
+    // Internal Relationships
+    Step_Instances -> Step_Engines [label="Invokes", fontsize=10];
+}
