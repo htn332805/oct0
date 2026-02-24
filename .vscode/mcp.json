@@ -2,13 +2,13 @@
   "servers": {
     "pexpect": {
       "type": "stdio",
-      "command": "/usr/local/bin/pexpect-mcp",
+      "command": "/home/hai/.local/bin/pexpect-mcp",
       "args": []
     },
     "terminal-control": {
       "type": "stdio",
-      "command": "/usr/local/bin/terminal-control-mcp",
-      "cwd": "/root/github_repo/oct0/bin/instances/pexpect_dev",
+      "command": "/home/hai/.local/bin/terminal-control-mcp",
+      "cwd": "/home/hai/github_repo/oct0/bin/instances/pexpect_dev",
       "args": []
     }
   },

@@ -31,7 +31,7 @@ For any Python execution or example:
 
 1. Activate the virtual environment:
    ```bash
-   source ~/pyenv/bin/activate
+   source ~/pyvenv/bin/activate
 ```
 
 2. Then run the script:
@@ -174,7 +174,7 @@ Always activate venv first, then run from `bin/instances/tmp`:
 
 ```bash
 cd /home/tester/Projects/octo/bin/instances/tmp
-source ~/pyenv/bin/activate
+source ~/pyvenv/bin/activate
 python ../../octo_step_engine_create.py  # Or other scripts
 ```
 
