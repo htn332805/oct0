@@ -1,0 +1,8 @@
+{
+  "prompt": "Generate 5 high-quality flashcards from the following text. Each flashcard should test a key concept. Format as:\nQ: [Question]\nA: [Answer]\n\n{text}",
+  "parameters": {
+    "max_tokens": 800,
+    "temperature": 0.7
+  },
+  "description": "Template for generating flashcards from study materials"
+}

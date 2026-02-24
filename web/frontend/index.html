@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Study System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="app">
+        <header class="header">
+            <h1><i class="fas fa-brain"></i> AI Study System</h1>
+            <div class="header-controls">
+                <div class="header-stats">
+                    <span id="doc-count">0</span> documents
+                    <span id="topic-count">0</span> topics
+                </div>
+                <div class="user-menu">
+                    <div class="user-info" id="userInfo">
+                        <span class="user-name" id="userName">Guest</span>
+                        <button class="user-menu-toggle" id="userMenuToggle">
+                            <i class="fas fa-user-circle"></i>
+                        </button>
+                    </div>
+                    <div class="user-dropdown" id="userDropdown">
+                        <button id="profileBtn">
+                            <i class="fas fa-user"></i> Profile
+                        </button>
+                        <button id="groupsBtn">
+                            <i class="fas fa-users"></i> Study Groups
+                        </button>
+                        <button id="logoutBtn">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <nav class="nav">
+            <button class="nav-btn active" data-tab="dashboard">
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+            </button>
+            <button class="nav-btn" data-tab="materials">
+                <i class="fas fa-book"></i> Materials
+            </button>
+            <button class="nav-btn" data-tab="search">
+                <i class="fas fa-search"></i> Search
+            </button>
+            <button class="nav-btn" data-tab="topics">
+                <i class="fas fa-tags"></i> Topics
+            </button>
+            <button class="nav-btn" data-tab="groups">
+                <i class="fas fa-users"></i> Groups
+            </button>
+            <button class="nav-btn" data-tab="generate">
+                <i class="fas fa-magic"></i> Generate
+            </button>
+        </nav>
+
+        <main class="main">
+            <!-- Dashboard Tab -->
+            <div id="dashboard-tab" class="tab-content active">
+                <div class="dashboard-grid">
+                    <div class="stat-card">
+                        <h3><i class="fas fa-book-open"></i> Study Materials</h3>
+                        <div class="stat-number" id="materials-count">0</div>
+                        <p>Total documents in your library</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3><i class="fas fa-clock"></i> Pending Reviews</h3>
+                        <div class="stat-number" id="pending-reviews">0</div>
+                        <p>Items due for spaced repetition</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3><i class="fas fa-tags"></i> Topics</h3>
+                        <div class="stat-number" id="topics-count">0</div>
+                        <p>Organized study categories</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3><i class="fas fa-chart-line"></i> Study Streak</h3>
+                        <div class="stat-number" id="study-streak">0</div>
+                        <p>Consecutive study days</p>
+                    </div>
+                </div>
+
+                <div class="recent-activity">
+                    <h3>Recent Activity</h3>
+                    <div id="recent-activity-list" class="activity-list">
+                        <p class="empty-state">No recent activity</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Materials Tab -->
+            <div id="materials-tab" class="tab-content">
+                <div class="section-header">
+                    <h2>Study Materials</h2>
+                    <button class="btn-primary" id="add-material-btn">
+                        <i class="fas fa-plus"></i> Add Material
+                    </button>
+                </div>
+
+                <div id="materials-list" class="materials-grid">
+                    <p class="empty-state">No study materials yet. Add your first material!</p>
+                </div>
+            </div>
+
+            <!-- Search Tab -->
+            <div id="search-tab" class="tab-content">
+                <div class="search-section">
+                    <h2>Knowledge Search</h2>
+                    <div class="search-controls">
+                        <input type="text" id="search-input" placeholder="Search your knowledge base..." class="search-input">
+                        <select id="search-type" class="search-select">
+                            <option value="semantic">Semantic Search</option>
+                            <option value="text">Full-text Search</option>
+                        </select>
+                        <button class="btn-primary" id="search-btn">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                    </div>
+                </div>
+
+                <div id="search-results" class="search-results">
+                    <p class="empty-state">Enter a search query to find relevant materials</p>
+                </div>
+            </div>
+
+            <!-- Topics Tab -->
+            <div id="topics-tab" class="tab-content">
+                <div class="section-header">
+                    <h2>Topics</h2>
+                    <button class="btn-primary" id="add-topic-btn">
+                        <i class="fas fa-plus"></i> Add Topic
+                    </button>
+                </div>
+
+                <div id="topics-list" class="topics-grid">
+                    <p class="empty-state">No topics created yet. Organize your materials!</p>
+                </div>
+            </div>
+
+            <!-- Groups Tab -->
+            <div id="groups-tab" class="tab-content">
+                <div class="section-header">
+                    <h2>Study Groups</h2>
+                    <button class="btn-primary" id="create-group-btn">
+                        <i class="fas fa-plus"></i> Create Group
+                    </button>
+                </div>
+
+                <div class="groups-section">
+                    <div class="groups-tabs">
+                        <button class="group-tab active" data-group-tab="my-groups">My Groups</button>
+                        <button class="group-tab" data-group-tab="public-groups">Public Groups</button>
+                    </div>
+
+                    <div id="my-groups-section" class="group-content active">
+                        <div id="my-groups-list" class="groups-grid">
+                            <p class="empty-state">You haven't joined any groups yet. Create one or join a public group!</p>
+                        </div>
+                    </div>
+
+                    <div id="public-groups-section" class="group-content">
+                        <div class="search-controls">
+                            <input type="text" id="group-search" placeholder="Search public groups..." class="search-input">
+                            <button class="btn-secondary" id="search-groups-btn">
+                                <i class="fas fa-search"></i> Search
+                            </button>
+                        </div>
+                        <div id="public-groups-list" class="groups-grid">
+                            <p class="empty-state">Loading public groups...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Generate Tab -->
+            <div id="generate-tab" class="tab-content">
+                <div class="generate-section">
+                    <h2>Generate Study Content</h2>
+                    <p class="note">AI-powered content generation (requires OpenAI API key)</p>
+
+                    <form id="generate-form" class="generate-form">
+                        <div class="form-group">
+                            <label for="generate-topic">Topic:</label>
+                            <input type="text" id="generate-topic" placeholder="e.g., Machine Learning, Python Functions" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="content-type">Content Type:</label>
+                            <select id="content-type" required>
+                                <option value="summary">Summary</option>
+                                <option value="flashcards">Flashcards</option>
+                                <option value="questions">Practice Questions</option>
+                                <option value="explanation">Detailed Explanation</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="difficulty">Difficulty:</label>
+                            <select id="difficulty" required>
+                                <option value="beginner">Beginner</option>
+                                <option value="intermediate">Intermediate</option>
+                                <option value="advanced">Advanced</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-magic"></i> Generate Content
+                        </button>
+                    </form>
+
+                    <div id="generated-content" class="generated-content hidden">
+                        <h3>Generated Content</h3>
+                        <div id="content-output" class="content-output"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="add-material-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add Study Material</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <form id="add-material-form" class="modal-form">
+                <div class="form-group">
+                    <label for="material-title">Title:</label>
+                    <input type="text" id="material-title" required>
+                </div>
+                <div class="form-group">
+                    <label for="material-content">Content:</label>
+                    <textarea id="material-content" rows="10" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="material-type">Type:</label>
+                    <select id="material-type">
+                        <option value="note">Note</option>
+                        <option value="article">Article</option>
+                        <option value="book">Book</option>
+                        <option value="video">Video</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="material-tags">Tags (comma-separated):</label>
+                    <input type="text" id="material-tags" placeholder="ml, ai, python">
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary modal-close">Cancel</button>
+                    <button type="submit" class="btn-primary">Add Material</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="add-topic-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add Topic</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <form id="add-topic-form" class="modal-form">
+                <div class="form-group">
+                    <label for="topic-name">Name:</label>
+                    <input type="text" id="topic-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="topic-description">Description:</label>
+                    <textarea id="topic-description" rows="3"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary modal-close">Cancel</button>
+                    <button type="submit" class="btn-primary">Add Topic</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Create Group Modal -->
+    <div id="create-group-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Create Study Group</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <form id="create-group-form" class="modal-form">
+                <div class="form-group">
+                    <label for="group-name">Group Name:</label>
+                    <input type="text" id="group-name" required minlength="3" maxlength="100">
+                </div>
+                <div class="form-group">
+                    <label for="group-description">Description:</label>
+                    <textarea id="group-description" rows="3" maxlength="500"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="group-public" checked>
+                        Make this group public (anyone can join)
+                    </label>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary modal-close">Cancel</button>
+                    <button type="submit" class="btn-primary">Create Group</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Group Details Modal -->
+    <div id="group-details-modal" class="modal hidden">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h3 id="group-details-title">Group Details</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div id="group-details-content">
+                <div class="group-info">
+                    <div class="group-header">
+                        <h4 id="group-name-display"></h4>
+                        <div class="group-actions">
+                            <button id="edit-group-btn" class="btn-secondary">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button id="share-material-btn" class="btn-primary">
+                                <i class="fas fa-share"></i> Share Material
+                            </button>
+                        </div>
+                    </div>
+                    <p id="group-description-display" class="group-description"></p>
+                    <div class="group-stats">
+                        <span id="group-member-count"></span> members
+                        <span id="group-shared-count"></span> shared materials
+                    </div>
+                </div>
+
+                <div class="group-tabs">
+                    <button class="group-detail-tab active" data-detail-tab="members">Members</button>
+                    <button class="group-detail-tab" data-detail-tab="materials">Shared Materials</button>
+                </div>
+
+                <div id="group-members-section" class="detail-content active">
+                    <div id="group-members-list" class="members-list">
+                        <p class="empty-state">Loading members...</p>
+                    </div>
+                </div>
+
+                <div id="group-materials-section" class="detail-content">
+                    <div id="group-materials-list" class="materials-list">
+                        <p class="empty-state">No materials shared yet.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Share Material Modal -->
+    <div id="share-material-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Share Material with Group</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <form id="share-material-form" class="modal-form">
+                <div class="form-group">
+                    <label for="share-material-select">Select Material:</label>
+                    <select id="share-material-select" required>
+                        <option value="">Choose a material...</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="share-access-level">Access Level:</label>
+                    <select id="share-access-level" required>
+                        <option value="read">Read Only</option>
+                        <option value="write">Read & Write</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary modal-close">Cancel</button>
+                    <button type="submit" class="btn-primary">Share Material</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notifications -->
+    <div id="notification" class="notification hidden">
+        <span id="notification-message"></span>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

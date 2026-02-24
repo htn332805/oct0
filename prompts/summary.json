@@ -1,0 +1,8 @@
+{
+  "prompt": "Please provide a comprehensive summary of the following text, organizing it into key concepts and main ideas:\n\n{text}",
+  "parameters": {
+    "max_tokens": 500,
+    "temperature": 0.3
+  },
+  "description": "Template for generating structured summaries of study materials"
+}
